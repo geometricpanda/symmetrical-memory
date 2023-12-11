@@ -56,4 +56,11 @@ web-build/
 cache/
 
 
-apps/preview-e2e/artifacts
+# Next.js
+.next
+
+# Storyblok (ish)
+*.pem
+
+.env
+.env.*
