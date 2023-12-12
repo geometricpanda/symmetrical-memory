@@ -2,58 +2,36 @@
 
 import 'server-only';
 import {ISbStoryData} from '@storyblok/react';
-import {GoogleAuth} from 'google-auth-library';
-import {PubSub} from '@google-cloud/pubsub';
+import { initializeApp } from "firebase/app";
+import { getFirestore, collection, doc, setDoc } from 'firebase/firestore/lite';
 
-const {GOOGLE_TOPIC_NAME, GOOGLE_APPLICATION_CREDENTIAL} = process.env;
+const {FIREBASE_CREDENTIAL} = process.env;
 
-
-if (!GOOGLE_TOPIC_NAME) {
-  throw new Error('Missing GOOGLE_TOPIC_NAME');
+if(!FIREBASE_CREDENTIAL) {
+  throw new Error('FIREBASE_CREDENTIAL not found');
 }
 
-if (!GOOGLE_APPLICATION_CREDENTIAL) {
-  throw new Error('Missing GOOGLE_APPLICATION_CREDENTIAL');
-}
+const firebaseCredential = atob(FIREBASE_CREDENTIAL);
+const firebaseConfig = JSON.parse(firebaseCredential);
 
-const credential_str = atob(GOOGLE_APPLICATION_CREDENTIAL);
-const credentials = JSON.parse(credential_str);
-
-const auth = new GoogleAuth({
-  projectId: credentials.project_id,
-  credentials: credentials,
-});
-
-const pubSubClient = new PubSub({
-  projectId: credentials.project_id,
-  auth,
-});
-
-interface Message {
-  ClientId: string;
-  StoryData: string;
-  StoryId: number;
-}
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 export const notifyClient = async (storyId: string, deviceId: string, story: ISbStoryData) => {
 
-  const message: Message = {
-    ClientId: deviceId,
-    StoryData: JSON.stringify(story),
-    StoryId: +storyId
-  };
+  const col = collection(db, 'storyblok-changes');
+  const docRef = doc(col, deviceId);
 
-  const dataBuffer = Buffer.from(JSON.stringify(message));
+  const data = {
+    storyId,
+    story,
+  }
 
   try {
-    await pubSubClient
-      .topic(GOOGLE_TOPIC_NAME)
-      .publishMessage({data: dataBuffer});
-
-    console.log(`Message`, storyId, `published for client`, deviceId);
-
-  } catch (error) {
-    console.error(`Received error while publishing:`, error);
+    await setDoc(docRef, data);
+    console.log(`Document written with ID: ${docRef.id}`);
+  } catch (e) {
+    console.error("Error adding document: ", e);
   }
 
 };
