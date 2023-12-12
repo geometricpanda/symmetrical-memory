@@ -26,7 +26,7 @@
     "**/*.tsx",
     "**/*.js",
     "**/*.jsx",
-    ".//.next/types/**/*.ts",
+    "../../apps/broker/.next/types/**/*.ts",
     "../../dist/apps/broker/.next/types/**/*.ts",
     "next-env.d.ts",
     ".next/types/**/*.ts"

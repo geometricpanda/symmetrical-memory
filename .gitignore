@@ -40,28 +40,20 @@ Thumbs.db
 
 .nx/cache
 
-# Expo
-node_modules/
-.expo/
-.yarn/
-dist/
-npm-debug.*
-*.jks
-*.p8
-*.p12
-*.key
-*.mobileprovision
-*.orig.*
-web-build/
-cache/
-
-
 # Next.js
 .next
 
-# Storyblok (ish)
-*.pem
+# Generated
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
 
-.env
-.env.*
+# App
+*.pem
 credentials/*
+.env.*
+.env

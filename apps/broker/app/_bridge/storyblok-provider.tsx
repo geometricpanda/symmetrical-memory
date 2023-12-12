@@ -1,8 +1,7 @@
 'use client';
 
 import { FC, useCallback, useEffect } from 'react';
-import { ISbStoryData, registerStoryblokBridge } from '@storyblok/react/rsc';
-import { loadStoryblokBridge } from '@storyblok/react';
+import { ISbStoryData, registerStoryblokBridge,loadStoryblokBridge } from '@storyblok/react/rsc';
 import { notifyClient } from './notify-client.action';
 
 export interface StoryblokProviderProps {
