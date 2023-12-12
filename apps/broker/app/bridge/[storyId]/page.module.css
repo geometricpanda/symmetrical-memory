@@ -4,3 +4,11 @@
   place-items: center;
   place-content: center;
 }
+
+.page__qr-code {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 100px;
+margin-left: 20px;
+}

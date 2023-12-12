@@ -43,7 +43,9 @@ const Page: FC<PageProps> = async ({ searchParams }) => {
 
   return (
     <div className={styles['page']}>
-      <QRCodeSVG size={400} value={url.toString()} />,
+      <div className={styles['page__qr-code']}>
+        <QRCodeSVG size={430} value={url.toString()} />,
+      </div>
       <StoryblokProvider
         story={story.data.story}
         storyId={storyId}

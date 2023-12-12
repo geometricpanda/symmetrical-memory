@@ -1,4 +1,5 @@
 import { FC, ReactNode } from 'react';
+import './global.css';
 
 interface RootLayoutProps {
   children: ReactNode;
