@@ -1,16 +1,33 @@
 'use server';
 
 import 'server-only';
-import { ISbStoryData } from '@storyblok/react';
-import { PubSub } from '@google-cloud/pubsub';
+import {ISbStoryData} from '@storyblok/react';
+import {GoogleAuth} from 'google-auth-library';
+import {PubSub} from '@google-cloud/pubsub';
 
-const pubSubClient = new PubSub();
+const {GOOGLE_TOPIC_NAME, GOOGLE_APPLICATION_CREDENTIAL} = process.env;
 
-const { GOOGLE_TOPIC_NAME } = process.env;
 
 if (!GOOGLE_TOPIC_NAME) {
   throw new Error('Missing GOOGLE_TOPIC_NAME');
 }
+
+if (!GOOGLE_APPLICATION_CREDENTIAL) {
+  throw new Error('Missing GOOGLE_APPLICATION_CREDENTIAL');
+}
+
+const credential_str = atob(GOOGLE_APPLICATION_CREDENTIAL);
+const credentials = JSON.parse(credential_str);
+
+const auth = new GoogleAuth({
+  projectId: credentials.project_id,
+  credentials: credentials,
+});
+
+const pubSubClient = new PubSub({
+  projectId: credentials.project_id,
+  auth,
+});
 
 interface Message {
   ClientId: string;
@@ -31,7 +48,10 @@ export const notifyClient = async (storyId: string, deviceId: string, story: ISb
   try {
     await pubSubClient
       .topic(GOOGLE_TOPIC_NAME)
-      .publishMessage({ data: dataBuffer });
+      .publishMessage({data: dataBuffer});
+
+    console.log(`Message`, storyId, `published for client`, deviceId);
+
   } catch (error) {
     console.error(`Received error while publishing:`, error);
   }

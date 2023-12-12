@@ -2989,6 +2989,7 @@ __metadata:
     eslint-plugin-jsx-a11y: "npm:6.7.1"
     eslint-plugin-react: "npm:7.32.2"
     eslint-plugin-react-hooks: "npm:4.6.0"
+    google-auth-library: "npm:^9.4.1"
     jest: "npm:^29.4.1"
     jest-environment-jsdom: "npm:^29.4.1"
     local-ssl-proxy: "npm:^2.0.5"
@@ -6325,7 +6326,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"google-auth-library@npm:^9.0.0":
+"google-auth-library@npm:^9.0.0, google-auth-library@npm:^9.4.1":
   version: 9.4.1
   resolution: "google-auth-library@npm:9.4.1"
   dependencies:
