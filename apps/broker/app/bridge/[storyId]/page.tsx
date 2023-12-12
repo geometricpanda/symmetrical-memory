@@ -1,11 +1,11 @@
-import { FC } from 'react';
-import { cookies } from 'next/headers';
-import { notFound } from 'next/navigation';
-import { QRCodeSVG } from 'qrcode.react';
-import { useStoryblokApi } from '@storyblok/react/rsc';
+import {FC} from 'react';
+import {cookies} from 'next/headers';
+import {notFound} from 'next/navigation';
+import {QRCodeSVG} from 'qrcode.react';
+import {useStoryblokApi} from '@storyblok/react/rsc';
 
-import { deviceIdCookieName } from '../../_utils';
-import { StoryblokProvider, loadStoryblok } from '../../_bridge';
+import {deviceIdCookieName} from '../../_utils';
+import {StoryblokProvider, loadStoryblok} from '../../_bridge';
 
 import styles from './page.module.css';
 
@@ -17,7 +17,7 @@ export interface PageProps {
   };
 }
 
-const Page: FC<PageProps> = async ({ searchParams }) => {
+const Page: FC<PageProps> = async ({searchParams}) => {
   const storyblok = useStoryblokApi();
   const cookieStore = cookies();
   const deviceId = cookieStore.get(deviceIdCookieName);
@@ -28,7 +28,7 @@ const Page: FC<PageProps> = async ({ searchParams }) => {
     return notFound();
   }
 
-  const url = new URL('exp://u.expo.dev/update/fb7f2813-8118-49fd-91c8-8d11f2d5406d');
+  const url = new URL('exp://u.expo.dev/update/e70a5da7-b7f5-4995-bba4-c563b88f0239');
   url.searchParams.set('storyId', storyId);
   url.searchParams.set('deviceId', deviceId.value);
 
@@ -44,12 +44,12 @@ const Page: FC<PageProps> = async ({ searchParams }) => {
   return (
     <div className={styles['page']}>
       <div className={styles['page__qr-code']}>
-        <QRCodeSVG size={430} value={url.toString()} />,
+        <QRCodeSVG size={430} value={url.toString()}/>,
       </div>
       <StoryblokProvider
         story={story.data.story}
         storyId={storyId}
-        deviceId={deviceId.value} />
+        deviceId={deviceId.value}/>
     </div>
   );
 
