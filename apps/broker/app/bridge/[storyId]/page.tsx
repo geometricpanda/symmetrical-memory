@@ -28,7 +28,7 @@ const Page: FC<PageProps> = async ({ searchParams }) => {
     return notFound();
   }
 
-  const url = new URL('exp://u.expo.dev/update/4aa1f1e0-900d-430b-9492-ae67a215cde1');
+  const url = new URL('exp://u.expo.dev/update/fb7f2813-8118-49fd-91c8-8d11f2d5406d');
   url.searchParams.set('storyId', storyId);
   url.searchParams.set('deviceId', deviceId.value);
 
